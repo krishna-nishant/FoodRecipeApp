@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { GlobalContext } from "../../context/index";
+import { GlobalContext } from "../context/index";
 
 export default function RecipeForm() {
   const [title, setTitle] = useState("");

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GlobalContext } from "../../context";
+import { GlobalContext } from "../context";
 
 export default function CommunityRecipes() {
   const { communityRecipes } = useContext(GlobalContext); // Access community recipes from context

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { GlobalContext } from "../../context";
-import RecipeItem from "../../components/recipe-item";
+import { GlobalContext } from "../context";
+import RecipeItem from "../components/RecipeItem";
 
 export default function Home() {
   const { recipeList, loading, searchParam } = useContext(GlobalContext);

@@ -1,8 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { GlobalContext } from "../../context";
+import { GlobalContext } from "../context";
 import { FaArrowLeft, FaHeart, FaHeartBroken } from "react-icons/fa";
-import "./index.css"; // Import the custom styles
 
 export default function Details() {
   const { id } = useParams();
@@ -31,40 +30,42 @@ export default function Details() {
   return (
     <>
       {/* Back Button */}
-      <button onClick={() => navigate(-1)} className="back-button">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 px-4 py-2 bg-blue-400 hover:bg-blue-600 rounded-md text-white transition-transform transform hover:scale-105 mb-5"
+      >
         <FaArrowLeft /> Back
       </button>
+
       <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Recipe Image */}
         <div className="order-2 lg:order-none flex justify-center items-center">
-          <div className="recipe-image-container">
+          <div className="w-full h-full overflow-hidden rounded-md">
             <img
               src={recipeDetailsData?.recipe?.image_url}
-              className="recipe-image"
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               alt="Recipe"
             />
           </div>
         </div>
 
         {/* Recipe Details */}
-        <div className="recipe-details">
+        <div className="flex flex-col gap-4 px-5">
           <span className="text-base font-semibold text-cyan-700 uppercase">
             {recipeDetailsData?.recipe?.publisher}
           </span>
-          <h3 className="text-3xl font-extrabold text-gray-800">
+          <h3 className="text-3xl font-extrabold text-gray-800 dark:text-white">
             {recipeDetailsData?.recipe?.title}
           </h3>
 
           {/* Add to Favorites Button */}
           <button
             onClick={() => handleAddToFavorite(recipeDetailsData?.recipe)}
-            className="fav-button"
+            className="flex items-center gap-2 px-6 py-3 rounded-lg text-white font-semibold uppercase bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md transition-transform transform hover:scale-105"
           >
-            {favoritesList &&
-            favoritesList.length > 0 &&
-            favoritesList.findIndex(
+            {favoritesList?.some(
               (item) => item.id === recipeDetailsData?.recipe?.id
-            ) !== -1 ? (
+            ) ? (
               <>
                 <FaHeartBroken className="text-xl" />
                 Remove from Favorites
@@ -79,10 +80,10 @@ export default function Details() {
 
           {/* Ingredients */}
           <div>
-            <h4 className="text-2xl font-semibold text-gray-800 mb-3 dark:text-white">
+            <h4 className="text-2xl font-semibold text-gray-800 dark:text-white mb-3">
               Ingredients
             </h4>
-            <ul className="ingredients-list">
+            <ul className="pl-5 list-disc text-lg text-gray-700 dark:text-white">
               {recipeDetailsData?.recipe?.ingredients.map(
                 (ingredient, index) => (
                   <li key={index}>
@@ -97,11 +98,11 @@ export default function Details() {
           </div>
 
           {/* Additional Info */}
-          <div className="mt-6 flex flex-col gap-1">
-            <span className="text-sm font-medium text-gray-700 dark:text-white">
+          <div className="mt-6 flex flex-col gap-1 text-gray-700 dark:text-white">
+            <span className="text-sm font-medium">
               Servings: {recipeDetailsData?.recipe?.servings}
             </span>
-            <span className="text-sm font-medium text-gray-700 dark:text-white">
+            <span className="text-sm font-medium">
               Cooking Time: {recipeDetailsData?.recipe?.cooking_time} mins
             </span>
           </div>
