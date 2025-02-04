@@ -3,11 +3,16 @@ import { NavLink } from "react-router-dom";
 import { GlobalContext } from "../context";
 
 export default function Navbar() {
-  const { searchParam, setSearchParam, handleSubmit } =
-    useContext(GlobalContext);
+  const {
+    searchParam,
+    setSearchParam,
+    handleSubmit,
+    isDarkMode,
+    setIsDarkMode,
+  } = useContext(GlobalContext);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-gray-800 shadow-md py-4">
+    <nav className="bg-white dark:bg-gray-800 fixed max-w-[1200px] mx-auto">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <h2 className="text-3xl font-bold text-gray-700 dark:text-white">
@@ -22,7 +27,7 @@ export default function Navbar() {
             value={searchParam}
             onChange={(e) => setSearchParam(e.target.value)}
             placeholder="Search recipes..."
-            className="px-5 py-2 w-80 rounded-full border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:border-red-400 shadow-sm transition duration-300 ease-in-out"
+            className="px-5 py-2 w-80 rounded-full border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-doubled focus:border-red-400 shadow-sm transition duration-300 ease-in-out"
           />
           <button
             type="submit"
@@ -74,20 +79,10 @@ export default function Navbar() {
 
         {/* Dark Mode Toggle Button */}
         <button
-          onClick={() => {
-            // Toggle dark mode
-            document.body.classList.toggle("dark");
-            // Save dark mode preference to localStorage
-            const currentTheme = document.body.classList.contains("dark")
-              ? "dark"
-              : "light";
-            localStorage.setItem("theme", currentTheme);
-          }}
-          className="ml-5 px-4 py-2 bg-gray-800 text-white rounded-full dark:bg-gray-200 dark:text-gray-800"
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className="p-2 rounded bg-gray-200 dark:bg-gray-700"
         >
-          {document.body.classList.contains("dark")
-            ? "Light Mode"
-            : "Dark Mode"}
+          {isDarkMode ? "Light Mode" : "Dark Mode"}
         </button>
       </div>
     </nav>

@@ -12,6 +12,22 @@ export default function GlobalState({ children }) {
   const [communityRecipes, setCommunityRecipes] = useState([]); // State for community recipes
   const navigate = useNavigate();
 
+
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+  }, [isDarkMode]);
+
+
+
   // Load favorites and community recipes from local storage on mount
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favoritesList");
@@ -96,6 +112,8 @@ export default function GlobalState({ children }) {
         favoritesList,
         communityRecipes,
         addRecipe,
+        isDarkMode,
+        setIsDarkMode
       }}
     >
       {children}

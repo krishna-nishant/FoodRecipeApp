@@ -16,7 +16,7 @@ export default function Home() {
     );
 
   return (
-    <div className="text-center py-10 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 rounded-lg shadow-md">
+    <div className="text-center bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4">
       {recipeList && recipeList.length > 0 ? (
         <div className="flex flex-wrap justify-center gap-10">
           {recipeList.map((item) => (
