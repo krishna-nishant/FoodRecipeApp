@@ -1,36 +1,46 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { GlobalContext } from "../context/index";
 
 export default function RecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
-  const { addRecipe } = useContext(GlobalContext); // Access the addRecipe function from context
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    // Create the new recipe object
-    const newRecipe = {
-      title,
-      ingredients,
-      instructions,
-    };
+    const newRecipe = { title, ingredients, instructions };
 
-    // Call addRecipe from context to add the recipe to the community list
-    addRecipe(newRecipe);
+    try {
+      const response = await fetch("http://localhost:5000/api/recipes/community", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRecipe),
+      });
 
-    // Reset the form fields
-    setTitle("");
-    setIngredients("");
-    setInstructions("");
-    
+      if (!response.ok) {
+        throw new Error("Failed to submit recipe");
+      }
 
-    navigate("/community-recipes");
+      // Reset the form fields
+      setTitle("");
+      setIngredients("");
+      setInstructions("");
+
+      navigate("/community-recipes"); // Redirect to the community page
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,9 +48,18 @@ export default function RecipeForm() {
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
         Add Your Recipe
       </h2>
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+
+      {error && <p className="text-red-500">{error}</p>}
+
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
+      >
         <div className="mb-4">
-          <label htmlFor="title" className="block text-gray-700 dark:text-white mb-2">
+          <label
+            htmlFor="title"
+            className="block text-gray-700 dark:text-white mb-2"
+          >
             Recipe Title
           </label>
           <input
@@ -55,7 +74,10 @@ export default function RecipeForm() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="ingredients" className="block text-gray-700 dark:text-white mb-2">
+          <label
+            htmlFor="ingredients"
+            className="block text-gray-700 dark:text-white mb-2"
+          >
             Ingredients
           </label>
           <textarea
@@ -69,7 +91,10 @@ export default function RecipeForm() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="instructions" className="block text-gray-700 dark:text-white mb-2">
+          <label
+            htmlFor="instructions"
+            className="block text-gray-700 dark:text-white mb-2"
+          >
             Instructions
           </label>
           <textarea
@@ -85,8 +110,9 @@ export default function RecipeForm() {
         <button
           type="submit"
           className="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-md mt-4"
+          disabled={loading}
         >
-          Submit Recipe
+          {loading ? "Submitting..." : "Submit Recipe"}
         </button>
       </form>
     </div>
