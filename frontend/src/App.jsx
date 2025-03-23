@@ -6,22 +6,19 @@ import Details from "./pages/Details";
 import RecipeForm from "./pages/RecipeForm";
 import CommunityRecipes from "./pages/CommunityRecipes";
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen max-w-[1200px] mx-auto">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-
-      <div className="pt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/recipe-item/:id" element={<Details />} />
-          <Route path="/submit-recipe" element={<RecipeForm />} />{" "}
-          <Route path="/community-recipes" element={<CommunityRecipes />} />{" "}
+          <Route path="/submit-recipe" element={<RecipeForm />} />
+          <Route path="/community-recipes" element={<CommunityRecipes />} />
         </Routes>
       </div>
     </div>
   );
 }
-
-export default App;

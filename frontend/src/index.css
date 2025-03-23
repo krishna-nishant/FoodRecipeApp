@@ -1,3 +1,131 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 346 100% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 346 100% 60%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 346 100% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 346 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+.loading-spinner {
+  @apply w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin;
+}
+
+.recipe-card {
+  @apply relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700;
+}
+
+.recipe-card:hover .recipe-image {
+  @apply scale-110;
+}
+
+.recipe-image {
+  @apply w-full h-full object-cover transition-transform duration-500;
+}
+
+.recipe-card-content {
+  @apply p-5 flex flex-col gap-2;
+}
+
+.recipe-publisher {
+  @apply text-sm font-medium text-primary;
+}
+
+.recipe-title {
+  @apply font-bold text-xl text-gray-800 dark:text-white line-clamp-2;
+}
+
+.recipe-button {
+  @apply mt-4 inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium text-white shadow-sm bg-primary hover:bg-primary/90 transition-colors duration-200;
+}
+
+.page-heading {
+  @apply text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-8 font-playfair;
+}
+
+.section-heading {
+  @apply text-2xl font-bold text-gray-800 dark:text-white mb-6 font-playfair;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2;
+}
+
+.form-input {
+  @apply w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 min-h-[120px];
+}
+
+.form-button {
+  @apply w-full py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2;
+}
+
+.nav-link {
+  @apply relative px-3 py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-primary dark:hover:text-primary transition-colors duration-200;
+}
+
+.nav-link-active {
+  @apply text-primary dark:text-primary;
+}
+
+.nav-link-active::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full;
+}
